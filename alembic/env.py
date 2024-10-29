@@ -12,7 +12,7 @@ from app.config import settings
 config = context.config
 
 # override variable within alembic.ini file to avoid hardcoding env vars
-config.set_main_option("sqlalchemy.url": postgresql+psycopg2://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name})
+config.set_main_option("sqlalchemy.url", f"postgresql+psycopg2://{settings.database_username}:{settings.database_password}@{settings.database_hostname}:{settings.database_port}/{settings.database_name}")
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
