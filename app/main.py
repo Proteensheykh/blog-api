@@ -12,8 +12,10 @@ from .routers import posts, users, auth, likes
 def create_database():
     # Create a Config object, pointing to the alembic.ini file
     alembic_cfg = Config("alembic.ini")
+    print("Creating Database schemas")
     # Run the Alembic upgrade command to apply all migrations
     command.upgrade(alembic_cfg, "head")
+    print("Data base created successfully.")
 
 app = FastAPI()
 
