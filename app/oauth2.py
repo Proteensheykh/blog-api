@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jwt import PyJWTError, encode, decode
@@ -28,7 +28,7 @@ def create_access_token(data: dict):
         str: The encoded JWT token.
     """
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    expire = datetime.now(tz=timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({"exp": expire})
 
     encoded_jwt = encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
@@ -67,7 +67,7 @@ def verify_access_token(token: str, credentials_exception):
     Raises:
         HTTPException: If the token is invalid or expired.
     """
-    print("token: ", token)
+    # print("token: ", token)
     try:
         payload = decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         id: str = payload.get("user_id")
